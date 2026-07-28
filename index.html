@@ -2,410 +2,455 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Krishna 🌸</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ultimate Memory Vault </title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Sacramento&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
-    
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+
     body {
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-      color: #4a4a4a;
+      background: #0d0612;
+      color: #fff;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
     }
 
-    /* Floating Cute Hearts Background */
-    .floating-heart {
+    /* Ambient Cinematic Background */
+    .bg-gradient {
       position: absolute;
-      color: rgba(255, 255, 255, 0.6);
-      animation: floatUp 6s linear infinite;
+      width: 160vw;
+      height: 160vh;
+      background: radial-gradient(circle at 50% 50%, #ff758c 0%, #ff7eb3 25%, #3a0ca3 70%, #0d0612 100%);
+      animation: pulseBg 12s ease-in-out infinite alternate;
       z-index: 0;
-      user-select: none;
+    }
+    @keyframes pulseBg {
+      0% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
+      100% { transform: scale(1.12) rotate(8deg); filter: hue-rotate(15deg); }
+    }
+
+    /* Floating Glowing Particles */
+    .particle {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 7s linear infinite;
+      z-index: 1;
+      opacity: 0.85;
     }
     @keyframes floatUp {
-      0% { transform: translateY(105vh) scale(0.5); opacity: 0; }
+      0% { transform: translateY(110vh) scale(0.3) rotate(0deg); opacity: 0; }
       50% { opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+      100% { transform: translateY(-10vh) scale(1.3) rotate(360deg); opacity: 0; }
     }
 
-    /* Phone Simulator Frame */
-    .hub-container {
+    /* Phone Frame Container */
+    .phone-frame {
       width: 100%;
       max-width: 390px;
       height: 100vh;
-      background: #fff0f3;
+      background: rgba(255, 240, 243, 0.98);
       position: relative;
-      box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.7), 0 0 60px rgba(255, 117, 140, 0.6);
       display: flex;
       flex-direction: column;
       overflow: hidden;
       z-index: 10;
-      border: 6px solid #fff;
+      border: 4px solid rgba(255, 255, 255, 0.95);
+      color: #333;
+      touch-action: none;
     }
 
-    /* CUTE ENTRY GATE SCREEN (First Page) */
-    #gate-screen {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-      z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; color: white; padding: 30px; transition: 0.5s ease;
-    }
-    
-    .gate-card {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      padding: 40px 25px;
-      border-radius: 30px;
-      box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .gate-btn {
-      background: #ffffff;
-      color: #ff477e; border: none; padding: 15px 35px;
-      font-size: 1.1rem; font-weight: 700; border-radius: 50px; cursor: pointer;
-      box-shadow: 0 8px 20px rgba(255, 71, 126, 0.3); margin-top: 25px; transition: 0.3s;
-      animation: pulseBtn 1.5s infinite;
-    }
-    @keyframes pulseBtn { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-    .gate-btn:hover { transform: scale(1.08); }
-
-    /* Views / Screens */
-    .view {
+    /* Cinematic Sliding Story Screens */
+    .story-screen {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 22px; text-align: center;
+      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+      z-index: 20;
       background: #fff0f3;
-      display: none;
-      flex-direction: column;
-      padding: 20px;
-      overflow-y: auto;
-      z-index: 5;
+      transform: translateX(0);
+      opacity: 1;
+      overflow: hidden;
     }
-    .view.active { display: flex !important; }
+    .story-screen.slide-left {
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .story-screen.slide-right-init {
+      transform: translateX(100%);
+      opacity: 0;
+      pointer-events: none;
+    }
 
-    /* CUTE LIVE MEMORY COUNTER WIDGET */
-    .memory-widget {
-      background: #ffffff;
-      border: 2px solid #ffe5ec;
-      padding: 12px 15px;
-      border-radius: 16px;
+    /* Gorgeous First Impression Card */
+    .hero-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      border: 2.5px solid rgba(255, 255, 255, 1);
+      padding: 35px 22px;
+      border-radius: 40px;
+      box-shadow: 0 25px 50px rgba(255, 105, 180, 0.35);
+      width: 100%;
+      max-width: 330px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 12px rgba(255, 105, 180, 0.1);
-    }
-    .memory-info { display: flex; align-items: center; gap: 10px; }
-    .memory-icon { font-size: 22px; animation: heartbeat 1.2s infinite; }
-    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-    .memory-text h4 { font-size: 0.8rem; font-weight: 700; color: #ff477e; }
-    .memory-text p { font-size: 0.65rem; color: #888; }
-    .sparkle-badge {
-      background: #fff0f3; color: #ff477e; border: 1px solid #ffb3c6; padding: 4px 10px;
-      border-radius: 12px; font-size: 0.7rem; font-weight: 700;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* HOME DASHBOARD */
-    .hub-header {
-      text-align: center;
-      margin-top: 5px;
-      margin-bottom: 15px;
-    }
-    .profile-badge {
-      width: 75px; height: 75px; border-radius: 50%; object-fit: cover;
-      border: 3px solid #ff477e; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(255,105,180,0.25);
-      display: block;
-    }
-    .hub-header h1 { font-size: 1.5rem; font-weight: 700; color: #333; }
-    .hub-header h2 { font-family: 'Sacramento', cursive; font-size: 2.3rem; color: #ff477e; margin-top: 2px; }
-    .hub-header p { font-size: 0.75rem; color: #666; margin-top: 2px; }
-
-    .grid-tiles {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    /* Action Buttons */
+    .btn-action {
+      background: linear-gradient(135deg, #ff477e 0%, #ff758c 100%);
+      color: white; border: none; padding: 14px 32px;
+      font-size: 1rem; font-weight: 700; border-radius: 50px; cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255, 71, 126, 0.45); transition: transform 0.2s ease;
+      margin-top: 10px;
     }
 
-    .tile {
-      background: #ffffff;
-      border: 2px solid #ffe5ec;
-      border-radius: 20px;
-      padding: 16px 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 5px 15px rgba(255, 105, 180, 0.1);
+    /* Cinematic 3D Envelope */
+    .envelope-box {
+      width: 210px; height: 145px; background: linear-gradient(135deg, #ff758c 0%, #ff477e 100%);
+      border-radius: 14px; position: relative; cursor: pointer;
+      box-shadow: 0 20px 40px rgba(255,71,126,0.4);
+      display: flex; justify-content: center; align-items: center;
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin-bottom: 20px;
     }
-    .tile:hover { transform: translateY(-3px); border-color: #ff477e; background: #fff5f7; }
-    .tile-icon { font-size: 26px; margin-bottom: 6px; }
-    .tile h3 { font-size: 0.9rem; font-weight: 700; color: #333; margin-bottom: 2px; }
-    .tile p { font-size: 0.65rem; color: #888; }
+    .envelope-box:hover { transform: scale(1.06) rotate(-2deg); }
+    .envelope-flap {
+      position: absolute; top: 0; left: 0; width: 100%; height: 75px;
+      background: #ff5c8a; clip-path: polygon(0 0, 50% 100%, 100% 0);
+      transform-origin: top; transition: transform 0.6s ease;
+    }
+    .envelope-box.open .envelope-flap { transform: rotateX(180deg); }
 
-    .back-btn {
-      background: #ffffff; border: 2px solid #ffb3c6; color: #ff477e; padding: 7px 15px;
-      border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 5px; margin-bottom: 12px; align-self: flex-start;
-      box-shadow: 0 3px 10px rgba(255,105,180,0.1);
+    /* Polaroid Card with 3D Tilt */
+    .polaroid-card {
+      background: white; padding: 12px 12px 18px 12px; border-radius: 18px;
+      box-shadow: 0 15px 30px rgba(255,105,180,0.25); border: 1.5px solid #ffe5ec;
+      margin-bottom: 12px; text-align: center; width: 100%;
+      transform: rotate(-1deg);
+    }
+    .polaroid-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; }
+    .polaroid-caption { font-family: 'Sacramento', cursive; font-size: 1.7rem; color: #ff477e; margin-top: 6px; }
+
+    /* Wish Box */
+    .wish-box {
+      background: white; border-radius: 18px; padding: 15px; border: 2px solid #ffe5ec;
+      box-shadow: 0 8px 20px rgba(255,105,180,0.1); width: 100%; text-align: left; margin-bottom: 12px;
     }
 
-    /* FOLDER 1: IG STORY CARD */
-    .ig-box {
-      background: #ffffff; border: 2px solid #ffe5ec; border-radius: 20px; width: 100%; 
-      padding: 15px; display: flex; flex-direction: column; gap: 12px;
-      box-shadow: 0 8px 25px rgba(255,105,180,0.15);
+    /* ORIGINAL CUTE PAPER LETTER STYLE */
+    .cute-letter-paper {
+      background: #fffdf5;
+      background-image: linear-gradient(#f8f3df 1.2em, transparent 1.2em);
+      background-size: 100% 1.2em;
+      border: 1px solid #e2d7bc;
+      border-radius: 12px;
+      padding: 16px 15px;
+      width: 100%;
+      text-align: left;
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      color: #3b302a;
+      line-height: 1.2em;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      margin-bottom: 10px;
+      position: relative;
+      transform: rotate(0.4deg);
+      max-height: 290px;
+      overflow-y: auto;
     }
-    .ig-top-row { display: flex; align-items: center; gap: 10px; }
-    .ig-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #ff477e; }
-    .ig-username { font-size: 0.85rem; font-weight: 700; color: #333; }
-    .ig-subtext { font-size: 0.68rem; color: #888; }
-    .ig-img-wrap { width: 100%; height: 280px; border-radius: 14px; overflow: hidden; position: relative; }
-    .ig-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .ig-caption-box { background: #fff5f7; border: 1.5px solid #ffb3c6; padding: 12px 14px; border-radius: 14px; text-align: center; }
-    .ig-caption-box p { font-size: 0.76rem; line-height: 1.5; color: #555; font-weight: 600; }
 
-    /* FOLDER 2: SPOTIFY VIBE */
-    .spotify-box {
-      background: #ffffff; border: 2px solid #bbf7d0; border-radius: 22px; padding: 20px; text-align: center;
-      box-shadow: 0 5px 15px rgba(34, 197, 94, 0.1);
+    /* Interactive Secret Note */
+    .secret-box {
+      background: #ffffff; border: 2px dashed #ff477e; border-radius: 18px; padding: 15px;
+      width: 100%; text-align: center; cursor: pointer; transition: 0.3s;
+      box-shadow: 0 8px 20px rgba(255,105,180,0.1); margin-bottom: 12px; position: relative; overflow: hidden;
     }
-    .spotify-img { width: 110px; height: 110px; border-radius: 18px; object-fit: cover; margin: 0 auto 12px; display: block; border: 2px solid #22c55e; }
 
-    /* FOLDER 3: SCRATCH CARD */
-    .scratch-box {
-      background: #ffffff; border: 2px solid #ffe5ec; border-radius: 22px; padding: 25px 15px; text-align: center;
-      position: relative; overflow: hidden; min-height: 240px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      box-shadow: 0 5px 15px rgba(255,105,180,0.1);
+    /* FASTBOOT SYSTEM WIPE SCREEN */
+    #screen-prank {
+      background: #000 !important;
+      color: #ff3333;
+      font-family: monospace;
+      text-align: left;
+      padding: 20px;
     }
-    .scratch-cover {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffb3c6;
-      display: flex; justify-content: center; align-items: center; font-weight: 700; color: #fff; font-size: 1.1rem;
-      cursor: pointer; transition: 0.4s; border-radius: 22px; z-index: 5;
-    }
-    .scratch-cover.gone { opacity: 0; pointer-events: none; }
-
-    /* FOLDER 4: AGREEMENT */
-    .agreement-box { background: #ffffff; border: 2px solid #ffe5ec; padding: 16px; border-radius: 18px; text-align: left; box-shadow: 0 5px 15px rgba(255,105,180,0.1); }
-    .check-row { display: flex; align-items: flex-start; margin-bottom: 12px; cursor: pointer; font-size: 0.8rem; color: #555; }
-    .check-row input { display: none; }
-    .custom-check {
-      min-width: 18px; height: 18px; border: 2px solid #ff477e; background: #fff;
-      border-radius: 5px; margin-right: 10px; display: flex; justify-content: center; align-items: center; transition: 0.2s;
-    }
-    .check-row input:checked ~ .custom-check { background: #ff477e; }
-    .check-row input:checked ~ .custom-check::after { content: '✓'; color: white; font-size: 11px; font-weight: bold; }
-    
-    .action-btn {
-      width: 100%; padding: 14px; background: #ff477e; color: white; border: none;
-      border-radius: 14px; font-weight: 700; margin-top: 15px; cursor: pointer;
-      box-shadow: 0 8px 20px rgba(255, 71, 126, 0.3); transition: 0.2s;
-    }
-    .action-btn:disabled { background: #ddd; color: #999; box-shadow: none; cursor: not-allowed; }
   </style>
 </head>
 <body>
 
-  <!-- CUTE ENTRY GATE SCREEN (First Page) -->
-  <div id="gate-screen">
-    <div class="gate-card">
-      <div style="font-size: 55px; margin-bottom: 10px;">🌸</div>
-      <h1 style="font-family: 'Sacramento', cursive; font-size: 3.5rem; color: #ffffff; line-height: 1;">For Krishna</h1>
-      <p style="font-size: 0.9rem; margin-top: 10px; color: #fff0f3; line-height: 1.5;">A special cute virtual memory hub awaits you...</p>
-      <button class="gate-btn" onclick="openHub()">Tap to Open 💖</button>
+  <div class="bg-gradient"></div>
+
+  <!-- PHONE CONTAINER -->
+  <div class="phone-frame">
+
+    <!-- PAGE 1: FIRST IMPRESSION PROMPT WITH RUNAWAY YES BUTTON -->
+    <div id="screen-1" class="story-screen" style="background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 35%, #ffb199 100%);">
+      <div class="hero-card">
+        <div style="font-size: 60px; margin-bottom: 10px;"></div>
+        <h1 style="font-family: 'Sacramento', cursive; font-size: 2.5rem; color: #ff477e; margin-bottom: 2px;">Special Surprise</h1>
+        <h2 style="font-size: 1.05rem; font-weight: 700; color: #444; line-height: 1.3; margin-bottom: 20px;" id="promptMsg">
+          I made something special for u... do u want to open it?
+        </h2>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; position: relative; min-height: 55px;">
+          <button class="btn-action" id="btnYes">YES </button>
+          <button class="btn-action" id="noBtn" style="background: #888; box-shadow: 0 10px 25px rgba(136,136,136,0.4);">NO </button>
+        </div>
+      </div>
     </div>
+
+    <!-- PAGE 2: ENVELOPE -->
+    <div id="screen-2" class="story-screen slide-right-init">
+      <div style="width: 100%; max-width: 330px; display: flex; flex-direction: column; align-items: center;">
+        <h1 style="font-family: 'Sacramento', cursive; font-size: 2.6rem; color: #ff477e; margin-bottom: 15px;">Special Delivery </h1>
+        
+        <div class="envelope-box" id="envBox">
+          <div class="envelope-flap"></div>
+          <div style="font-size: 45px; z-index: 2;"></div>
+        </div>
+        <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;" id="envHint">Tap envelope to unfold secret letter </p>
+
+        <button class="btn-action" id="envNextBtn" style="display: none;">My Wish </button>
+      </div>
+    </div>
+
+    <!-- PAGE 3: WISH -->
+    <div id="screen-3" class="story-screen slide-right-init">
+      <div style="width: 100%; max-width: 330px; display: flex; flex-direction: column; align-items: center;">
+        <h1 style="font-family: 'Sacramento', cursive; font-size: 2.5rem; color: #ff477e; margin-bottom: 6px;">My Wish For You </h1>
+        
+        <div class="wish-box">
+          <p style="font-size: 0.8rem; line-height: 1.6; color: #555;">
+            "May you always be the happiest person and keep getting success in your life. Thank you for always listening to me and being my safe place. You are the best part of my life! "
+          </p>
+        </div>
+
+        <button class="btn-action" id="btnWishNext">Read Letter </button>
+      </div>
+    </div>
+
+    <!-- PAGE 4: LETTER -->
+    <div id="screen-4" class="story-screen slide-right-init">
+      <div style="width: 100%; max-width: 330px; display: flex; flex-direction: column; align-items: center;">
+        <h1 style="font-family: 'Sacramento', cursive; font-size: 2.3rem; color: #ff477e; margin-bottom: 4px;">A Letter For You </h1>
+        
+        <div class="cute-letter-paper">
+          Happy Friendship Day, Krishna! <br><br>
+          Me tara ketla badha cute nicknames banavani try kari, pan saachu kahu to mane ek pan nickname thi tarno real vibe nathi aavto. Jevu 'Krishna' naam ma charm chhe, te bija koi ma nathi! Etle taro original name j best chhe. <br><br>
+          Saachu kahu to, aa website ni coding background ma me nathi lakhi, pan aa aakho concept, aakha pages no idea, ane aane kevi rite aesthetic banavvi e aakhu me potae nakki kariyu chhe. Aa aakhi website banavama mane khub j maza aavi, ane sathe-sathe hu aana thi ghunu badhu sikh pan gayo ke aavi cool digital surprise kevi rite banay. <br><br>
+          <div style="text-align: right; margin-top: 10px; font-weight: bold; color: #ff477e;">
+            � Right by Aryan 
+          </div>
+        </div>
+
+        <button class="btn-action" id="btnLetterNext">Secret Vault </button>
+      </div>
+    </div>
+
+    <!-- PAGE 5: SECRET -->
+    <div id="screen-5" class="story-screen slide-right-init">
+      <div style="width: 100%; max-width: 330px; display: flex; flex-direction: column; align-items: center;">
+        <h1 style="font-family: 'Sacramento', cursive; font-size: 2.5rem; color: #ff477e; margin-bottom: 6px;">Secret Vault </h1>
+        
+        <div class="secret-box" id="secretBox">
+          <h3 style="font-size: 0.95rem; color: #ff477e; font-weight: 700; margin-bottom: 4px;" id="secTitle"> Tap to scratch & reveal</h3>
+          <p style="font-size: 0.76rem; color: #666;" id="secDesc">You are stuck with me for life, no cancellations! </p>
+        </div>
+
+        <button class="btn-action" id="btnSecretNext">Final Surprise </button>
+      </div>
+    </div>
+
+    <!-- PAGE 6: FINAL -->
+    <div id="screen-6" class="story-screen slide-right-init">
+      <div style="width: 100%; max-width: 330px; display: flex; flex-direction: column; align-items: center;">
+        <h1 style="font-family: 'Sacramento', cursive; font-size: 2.3rem; color: #ff477e; margin-bottom: 4px;">Happy Friendship Day </h1>
+        
+        <div class="polaroid-card">
+          <img src="krishna.jpg" alt="Krishna" onerror="this.src='https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?q=80&w=600&auto=format&fit=crop'">
+          <div class="polaroid-caption">Will you be my forever bestie? </div>
+        </div>
+
+        <button class="btn-action" id="btnCelebrate">CELEBRATE </button>
+      </div>
+    </div>
+
+    <!-- PAGE 7: FASTBOOT / SYSTEM SHOCK PRANK -->
+    <div id="screen-prank" class="story-screen slide-right-init">
+      <div style="width: 100%; max-width: 330px; display: flex; flex-direction: column; align-items: flex-start;">
+        <p style="font-size: 0.72rem; line-height: 1.4; color: #ff3333;" id="terminalText">
+          FASTBOOT MODE (SYSTEM_WIPE v2.1)<br>
+          [ERROR] Critical partition format requested.<br>
+          [WARNING] External package execution detected.<br>
+          > Wiping user storage & gallery...<br>
+          - Deleting photos/krishna.jpg ... [REMOVED]<br>
+          - Erasing memory database... <span id="percent">34%</span><br>
+          <span style="color:yellow;">PHONE FACTORY RESET IN <span id="countdown">00:03</span></span>
+        </p>
+        <div id="prankButtonBox" style="display: none; width: 100%; text-align: center; margin-top: 15px;">
+          <h2 style="color: #ff477e; font-family: 'Outfit'; font-size: 1.6rem; margin-bottom: 6px;">DHAPAAA! </h2>
+          <p style="color: #444; font-family: 'Outfit'; font-size: 0.82rem; margin-bottom: 12px;">Ekdam darai gai hase ne?! Mazaak hato yaar, phone ekdam safe chhe! Happy Friendship Day, Krishna! </p>
+          <button class="btn-action" id="btnGotcha" style="background: #ff477e; width: 100%;">Open Real Surprise </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // Floating background hearts generator
-    setInterval(() => {
-      const heart = document.createElement('div');
-      heart.classList.add('floating-heart');
-      heart.innerHTML = ['💖', '🌸', '✨', '🌷'][Math.floor(Math.random() * 4)];
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
-      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }, 600);
-
-    // Open Hub smoothly
-    function openHub() {
-      const gate = document.getElementById('gate-screen');
-      gate.style.opacity = '0';
-      setTimeout(() => {
-        gate.style.display = 'none';
-      }, 500);
-    }
-
-    // Navigation function
-    function openView(viewId) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      const target = document.getElementById(viewId);
-      if (target) {
-        target.classList.add('active');
+    document.addEventListener("DOMContentLoaded", function() {
+      function safeConfetti(opts) {
+        try {
+          if (typeof confetti === 'function') {
+            confetti(opts);
+          }
+        } catch(e) {}
       }
-    }
 
-    function scratchOpen() {
-      document.getElementById('scratchCover').classList.add('gone');
-      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#ff477e', '#ffb3c6', '#ffffff'] });
-    }
+      // Floating Particles
+      setInterval(() => {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        p.innerHTML = ['', '', '', '', ''][Math.floor(Math.random() * 5)];
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.fontSize = (Math.random() * 14 + 14) + 'px';
+        p.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 7000);
+      }, 450);
 
-    function checkTerms() {
-      const boxes = document.querySelectorAll('.terms');
-      let allChecked = true;
-      boxes.forEach(b => { if (!b.checked) allChecked = false; });
-      document.getElementById('finishBtn').disabled = !allChecked;
-    }
+      function goToScreen(screenId) {
+        const current = document.querySelector('.story-screen:not(.slide-left):not(.slide-right-init)');
+        const target = document.getElementById(screenId);
+        
+        if(current) current.classList.add('slide-left');
+        if(target) {
+          target.classList.remove('slide-right-init');
+          target.classList.remove('slide-left');
+        }
+        safeConfetti({ particleCount: 90, spread: 65, origin: { y: 0.6 } });
+      }
 
-    function celebrateParty() {
-      confetti({ particleCount: 250, spread: 130, origin: { y: 0.5 }, colors: ['#ff477e', '#ffb3c6', '#ffffff'] });
-      alert("Agreement Signed! Happy Friendship Day, Krishna! 🌸");
-    }
+      // YES Button Runaway Logic
+      let yesClickCount = 0;
+      const btnYes = document.getElementById('btnYes');
+      
+      btnYes.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (yesClickCount === 0) {
+          yesClickCount++;
+          btnYes.style.transform = "translate(40px, -15px)";
+          btnYes.innerText = "Pakdi batao! ";
+        } else if (yesClickCount === 1) {
+          yesClickCount++;
+          btnYes.style.transform = "translate(-40px, 15px)";
+          btnYes.innerText = "Bahu tez chho! ";
+        } else {
+          goToScreen('screen-2');
+        }
+      });
+
+      let noCount = 0;
+      document.getElementById('noBtn').addEventListener('click', function() {
+        noCount++;
+        const msg = document.getElementById('promptMsg');
+        if(noCount === 1) {
+          msg.innerText = "Why did u click no?! Try again! ";
+          this.style.transform = "scale(0.8)";
+        } else {
+          msg.innerText = "Mari sathe mazaak nai, YES dabav fatak-fatak! ";
+          this.style.transform = "scale(0.6)";
+        }
+      });
+
+      document.getElementById('envBox').addEventListener('click', function() {
+        this.classList.add('open');
+        document.getElementById('envHint').innerText = "Envelope Unfolded Successfully! ";
+        document.getElementById('envNextBtn').style.display = "block";
+        safeConfetti({ particleCount: 120, spread: 70, origin: { y: 0.5 } });
+      });
+
+      document.getElementById('envNextBtn').addEventListener('click', () => goToScreen('screen-3'));
+      document.getElementById('btnWishNext').addEventListener('click', () => goToScreen('screen-4'));
+      document.getElementById('btnLetterNext').addEventListener('click', () => goToScreen('screen-5'));
+
+      let revealed = false;
+      document.getElementById('secretBox').addEventListener('click', function() {
+        const title = document.getElementById('secTitle');
+        const desc = document.getElementById('secDesc');
+        if(!revealed) {
+          title.innerText = " Lifetime Pact Unlocked!";
+          desc.innerText = "Jetli pan boring lecture hoy, tari sathe vaato karva ma jo maza aavti te bija koi ma nathi!";
+          this.style.background = "#fff0f3";
+          safeConfetti({ particleCount: 100, spread: 70, origin: { y: 0.5 } });
+          revealed = true;
+        } else {
+          title.innerText = " Tap to scratch & reveal";
+          desc.innerText = "You are stuck with me for life, no cancellations! ";
+          this.style.background = "#fff";
+          revealed = false;
+        }
+      });
+
+      document.getElementById('btnSecretNext').addEventListener('click', () => goToScreen('screen-6'));
+
+      // FASTBOOT SHOCK PRANK TRIGGER
+      document.getElementById('btnCelebrate').addEventListener('click', function() {
+        goToScreen('screen-prank');
+        const phone = document.querySelector('.phone-frame');
+        phone.classList.add('shake');
+
+        let p = 34;
+        let pInterval = setInterval(() => {
+          p += 20;
+          if(p <= 98) {
+            document.getElementById('percent').innerText = p + '%';
+          }
+        }, 400);
+
+        let timeLeft = 3;
+        let cInterval = setInterval(() => {
+          timeLeft--;
+          if(timeLeft >= 0) {
+            document.getElementById('countdown').innerText = '00:0' + timeLeft;
+          }
+        }, 1000);
+
+        setTimeout(() => {
+          clearInterval(pInterval);
+          clearInterval(cInterval);
+          phone.classList.remove('shake');
+          document.getElementById('percent').innerText = '100% (DONE)';
+          document.getElementById('countdown').innerText = '00:00';
+          document.getElementById('terminalText').innerHTML += "<br><br><span style='color:#00ff66;'>[PRANK_SUCCESS]: DHAPAAA! </span>";
+          document.getElementById('prankButtonBox').style.display = "block";
+        }, 3500);
+      });
+
+      document.getElementById('btnGotcha').addEventListener('click', function() {
+        goToScreen('screen-6');
+        safeConfetti({
+          particleCount: 500,
+          spread: 200,
+          origin: { y: 0.5 },
+          colors: ['#ff477e', '#ffb3c6', '#ffffff', '#ff758c', '#3a0ca3', '#22c55e']
+        });
+      });
+    });
   </script>
-
-  <div class="hub-container">
-    
-    <!-- HOME DASHBOARD VIEW (Second Page) -->
-    <div class="view active" id="home-view">
-      
-      <!-- Cute Live Love/Memory Widget -->
-      <div class="memory-widget">
-        <div class="memory-info">
-          <div class="memory-icon">💖</div>
-          <div class="memory-text">
-            <h4>Best Friends Forever</h4>
-            <p>From 8th grade to infinity ✨</p>
-          </div>
-        </div>
-        <div class="sparkle-badge">Pure Vibe</div>
-      </div>
-
-      <div class="hub-header">
-        <img src="krishna.jpg" class="profile-badge" alt="Krishna" onerror="this.src='https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?q=80&w=600&auto=format&fit=crop'">
-        <h1>Welcome, Krishna</h1>
-        <h2>Memory Hub ✨</h2>
-        <p>Explore your special memory folders below</p>
-      </div>
-
-      <div class="grid-tiles">
-        <div class="tile" onclick="openView('ig-view')">
-          <div class="tile-icon">📸</div>
-          <h3>IG Story</h3>
-          <p>Cinematic memory</p>
-        </div>
-        <div class="tile" onclick="openView('spotify-view')">
-          <div class="tile-icon">🎧</div>
-          <h3>Lofi Vibes</h3>
-          <p>School days song</p>
-        </div>
-        <div class="tile" onclick="openView('scratch-view')">
-          <div class="tile-icon">✨</div>
-          <h3>Secret Note</h3>
-          <p>Scratch to reveal</p>
-        </div>
-        <div class="tile" onclick="openView('vault-view')">
-          <div class="tile-icon">📜</div>
-          <h3>The Contract</h3>
-          <p>Friendship terms</p>
-        </div>
-      </div>
-
-      <div style="margin-top: auto; text-align: center; color: #888; font-size: 0.75rem; padding-bottom: 5px;">
-        Designed with ❤️ by Aryan
-      </div>
-    </div>
-
-    <!-- VIEW 1: IG STORY (Upgraded Sweet Caption) -->
-    <div class="view" id="ig-view">
-      <button class="back-btn" onclick="openView('home-view')">← Back to Hub</button>
-      
-      <div class="ig-box">
-        <div class="ig-top-row">
-          <img src="krishna.jpg" class="ig-avatar" alt="Avatar" onerror="this.src='https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?q=80&w=600&auto=format&fit=crop'">
-          <div>
-            <h4 class="ig-username">aryan_patel</h4>
-            <p class="ig-subtext">8th grade core memories 🏫✨</p>
-          </div>
-        </div>
-
-        <div class="ig-img-wrap">
-          <img src="krishna.jpg" alt="Memory" onerror="this.src='https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?q=80&w=600&auto=format&fit=crop'">
-        </div>
-
-        <div class="ig-caption-box">
-          <p>
-            "Yad chhe 8th standard? Tyare khabar navti ke aapni dosti aavi pakki thai jashe!<br>
-            Btw, tari presence vagar school life adhuri lagti. Stay awesome always! 🌸😂"
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 2: SPOTIFY VIBE (Upgraded Cute Vibe) -->
-    <div class="view" id="spotify-view">
-      <button class="back-btn" onclick="openView('home-view')">← Back to Hub</button>
-      <div class="spotify-box">
-        <img src="krishna.jpg" class="spotify-img" alt="Album" onerror="this.src='https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?q=80&w=600&auto=format&fit=crop'">
-        <h3 style="font-size: 1.1rem; font-weight: 700; color: #15803d; margin-bottom: 4px;">The School Days Anthem 🎶</h3>
-        <p style="font-size: 0.75rem; color: #666; margin-bottom: 12px;">Aryan & Krishna • Lifetime Playlist</p>
-        <p style="font-size: 0.85rem; color: #555; font-style: italic; line-height: 1.5;">
-          "Jetli pan boring lecture hoy, tari sathe vaato karva ma jo maza aavti te bija koi ma nathi! Keep smiling like this forever. 💫"
-        </p>
-      </div>
-    </div>
-
-    <!-- VIEW 3: SCRATCH CARD (Upgraded Secret Note) -->
-    <div class="view" id="scratch-view">
-      <button class="back-btn" onclick="openView('home-view')">← Back to Hub</button>
-      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: #ff477e; text-align: center;">Secret Note 💌</h2>
-      <div class="scratch-box">
-        <div style="font-size: 0.95rem; color: #555; line-height: 1.6;">
-          "Warning: Aa note read karya pachi tame mara thi kadi pacho phero nahi kari shako!<br>
-          You are stuck with me for life, Krishna. Best friend forever! 🌸 — Aryan"
-        </div>
-        <div class="scratch-cover" id="scratchCover" onclick="scratchOpen()">
-          Tap here to Open ✨
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 4: AGREEMENT (Upgraded Fun Contract) -->
-    <div class="view" id="vault-view">
-      <button class="back-btn" onclick="openView('home-view')">← Back to Hub</button>
-      <h2 style="font-size: 1.15rem; margin-bottom: 4px; color: #ff477e;">Friendship Renewal 📜</h2>
-      <p style="font-size: 0.78rem; color: #666; margin-bottom: 12px;">Accept the terms to unlock celebration.</p>
-      
-      <div class="agreement-box">
-        <label class="check-row">
-          <input type="checkbox" class="terms" onchange="checkTerms()">
-          <span class="custom-check"></span>
-          <span>Hamesha bakwaas memes moklavani guarantee</span>
-        </label>
-        <label class="check-row">
-          <input type="checkbox" class="terms" onchange="checkTerms()">
-          <span class="custom-check"></span>
-          <span>Bija badha ni samaksh mara silent partner banvu</span>
-        </label>
-        <label class="check-row">
-          <input type="checkbox" class="terms" onchange="checkTerms()">
-          <span class="custom-check"></span>
-          <span>Dosti kadi cancel nahi karvani (Lifetime pact!)</span>
-        </label>
-      </div>
-      <button class="action-btn" id="finishBtn" disabled onclick="celebrateParty()">ACCEPT & CELEBRATE 🎉</button>
-    </div>
-
-  </div>
 
 </body>
 </html>
